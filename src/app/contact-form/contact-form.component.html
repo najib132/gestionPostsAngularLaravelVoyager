@@ -1,0 +1,62 @@
+<form #f="ngForm" (ngSubmit)="submit(f)">
+ <div ngModelGroup="contact">
+        <div class="form-group">
+            <label for="firstname">firstname</label>
+            <input 
+             required
+             minlength="4" 
+             maxlength="10" 
+             pattern="[a-zA-Z]+" 
+             ngModel name="firstname" 
+             #firstname="ngModel" 
+             class="form-control" 
+             type="text">
+
+            <div class="alert alert-danger" *ngIf="firstname.touched && !firstname.valid">
+                    <div *ngIf="firstname.errors.required">ce champ est oblig</div>
+                    <div *ngIf="firstname.errors.minlength">ce champs doit avoir au moins {{ firstname.errors.minlength.actualLength }}/{{firstname.errors.minlength.requiredLength}} caractere</div>
+                    <div *ngIf="firstname.errors.pattern"> first name doit etre alph</div>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label for="lastname">lastname</label>
+            <input ngModel name="lastname" #lastname class="form-control" id="lastname" type="text">
+        </div>
+ </div>  
+    <div class="form-group">
+        <label for="comment">comment</label>
+        <textarea ngModel name="comment" #comment class="form-control" id="comment" type="text"></textarea>
+    </div> 
+
+    <div class="radio" *ngFor="let method of methodContact">
+            <label for="">
+              <input type="radio" ngModel name="methodContact2" [value]="method.id" >
+              {{ method.name }}
+            </label>
+    </div>
+
+    <div class="form-group">
+            <label for="methodContact">method de contact</label>
+            <select class="form-control" id="methodContact" ngModel name="methodContact" id="">
+              <option value=""></option>
+              <option *ngFor="let method of methodContact" [ngValue]="method">{{ method.name }}</option>
+            </select>
+    </div>
+
+    <div class="checkbox">
+        <label>
+          <input type="checkbox" ngModel name="subscribe">S'abonner
+        </label>
+    </div>
+
+<div class="form-group">
+    <button class="btn btn-primary" [disabled]="!f.valid">Enregistre</button>
+</div>
+
+</form>
+
+<p>{{ f.value | json }}</p>
+
+
+
